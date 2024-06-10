@@ -1,6 +1,6 @@
 {
   "name": "@glowingblue-dev/flarum-webpack-config",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Webpack config for Flarum JS and TS transpilation.",
   "main": "index.js",
   "author": "Flarum Team",
