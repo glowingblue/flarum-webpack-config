@@ -1,57 +1,15 @@
-# Webpack config for Flarum JS/TS compilation
+# Backported Webpack Config for Flarum JS/TS Compilation
 
-This package generates a [Webpack](https://webpack.js.org) config object that will compile JavaScript for use in Flarum.
+This fork of the Flarum Webpack config backports key changes from Flarum 2.x to 1.x.
 
-## Usage
+## Background
 
-**webpack.config.js**
+In Flarum 2.x, the JavaScript compilation process was streamlined by removing unnecessary ES5 polyfills, resulting in a reduced bundle size and modernized ES6 output. These changes can be found in the original [PR #3699](https://github.com/flarum/framework/pull/3699).
 
-```js
-var config = require('flarum-webpack-config');
+## Key Changes
 
-module.exports = config(options);
-```
+- Outputs ES6 JavaScript instead of ES5.
+- Reduces bundle size by excluding unnecessary ES5 polyfills.
+- Requires recompilation of all extension JS source code with the updated Webpack config.
 
-To merge in custom Webpack config options, use [webpack-merge](https://www.npmjs.com/package/webpack-merge).
-
-### Webpack Bundle Analyzer
-
-You can view a visual representation of your JS Bundle by building with Webpack Bundle Analyzer.
-
-Add another build script to your `package.json` like the one below:
-
-```json
-{
-  "analyze": "npx cross-env ANALYZER=true npm run build"
-}
-```
-
-## Typescript
-
-You'll need to configure a `tsconfig.json` file to ensure your IDE sets up Typescript support correctly.
-
-For details about this, see the [`flarum/flarum-tsconfig` repository](https://github.com/flarum/flarum-tsconfig)
-
-## Options
-
-### `useExtensions`
-
-`Array<string>`, defaults to `[]`.
-
-An array of extensions whose modules should be made available. This is a shortcut to add [`externals`](https://webpack.js.org/configuration/externals/) configuration for extension modules. Imported extension modules will not be bundled, but will instead refer to the extension's exports included in the Flarum runtime (ie. `flarum.extensions["vendor/package"]`).
-
-For example, to access the Tags extension module within your extension:
-
-**forum.js**
-
-```js
-import { Tag } from '@flarum/tags/forum';
-```
-
-**webpack.config.js**
-
-```js
-module.exports = config({
-  useExtensions: ['flarum/tags'],
-});
-```
+These changes aim to future-proof the codebase and enhance performance by utilizing modern JavaScript features.
